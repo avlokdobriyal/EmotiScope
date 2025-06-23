@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EmotiScope – Feel. Predict. Play. </title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .logo-svg {
+      width: 180px;
+      height: auto;
+      cursor: pointer;
+    }
+
+    .eye {
+      transition: all 0.3s ease;
+    }
+
+    .logo-link:hover .eye-right {
+      r: 1;
+    }
+
+    .magnifier-group {
+      transition: transform 0.4s ease, filter 0.4s ease;
+      transform-origin: center;
+    }
+
+    .logo-link:hover .magnifier-group {
+      transform: scale(1.05) rotate(-5deg);
+      filter: drop-shadow(0 0 6px #fb7185);
+    }
+
+    header {
+      padding: 5px 20px;
+      background-color: #0f172a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header .logo-container {
+      display: flex;
+      align-items: center;
+    }
+
+    footer {
+      padding: 2px 20px;
+      background-color: #0f172a;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    footer a {
+      color: #fb7185;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    .tile-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin: 40px auto;
+      gap: 20px;
+      max-width: 1200px;
+    }
+
+    .tile {
+      background-color: #1e293b;
+      color: white;
+      padding: 20px;
+      border-radius: 20px;
+      width: 350px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .tile:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .tile h3 {
+      color: #fb7185;
+      margin-bottom: 10px;
+    }
+
+    .tile p {
+      margin: 5px 0;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Emoji Background -->
+  <div class="emoji-bg"></div>
+
+  <!-- Preloader -->
+  <div id="preloader">Loading EmotiScope...</div>
+
+  <!-- Header -->
+  <header class="fade-in fade-in-delay-1">
+    <div class="logo-container">
+      <a href="#" class="logo-link">
+        <svg class="logo-svg" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+          <style>
+            .text {
+              font-family: 'Segoe UI', sans-serif;
+              font-size: 48px;
+              font-weight: bold;
+            }
+            .emotion { fill: #fb7185; }
+            .scope { fill: #ffffff; }
+          </style>
+          <g class="magnifier-group">
+            <circle cx="80" cy="100" r="40" stroke="#fb7185" stroke-width="6" fill="none"/>
+            <circle cx="80" cy="100" r="30" fill="#fb7185"/>
+            <circle cx="80" cy="100" r="28" fill="#fb7185"/>
+            <circle class="eye eye-left" cx="70" cy="90" r="4" fill="#fff"/>
+            <circle class="eye eye-right" cx="90" cy="90" r="4" fill="#fff"/>
+            <path d="M70,110 Q80,120 90,110" stroke="#fff" stroke-width="3" fill="none" />
+            <rect x="110" y="130" width="60" height="10" rx="5" fill="#0f172a" transform="rotate(45 110 130)" />
+          </g>
+          <text x="180" y="115" class="text">
+            <tspan class="scope">Emoti</tspan><tspan class="emotion">Scope</tspan>
+          </text>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="container fade-in fade-in-delay-2">
+    <h2>EmotiScope – Feel. Predict. Play.</h2>
+    <textarea id="inputText" placeholder="Type something emotional..."></textarea>
+    <button onclick="detectEmotion()">Analyze</button>
+
+    <div id="resultBox">
+      <h3>Top Emotion:</h3>
+      <p id="emotionResult">---</p>
+      <div class="chart-wrapper">
+        <canvas id="emotionChart" width="400" height="300"></canvas>
+      </div>
+    </div>
+
+    <!-- Recommendation Tiles -->
+    <div class="tile-container fade-in fade-in-delay-3">
+      <div class="tile">
+        <h3>Your Emotion, Your Movie</h3>
+        <p><strong>Title:</strong> <span id="movie-title">--</span></p>
+        <p><strong>Year of Release:</strong> <span id="movie-year">--</span></p>
+        <p><strong>Certificate:</strong> <span id="movie-certificate">--</span></p>
+        <p><strong>Runtime:</strong> <span id="movie-runtime">--</span></p>
+        <p><strong>Genre:</strong> <span id="movie-genre">--</span></p>
+        <p><strong>IMDB Rating:</strong> <span id="movie-rating">--</span></p>
+        <p><strong>Description:</strong> <span id="movie-description">--</span></p>
+      </div>
+
+      <div class="tile">
+        <h3>Your Emotion, Your TV Show</h3>
+        <p><strong>Title:</strong> <span id="tv-title">--</span></p>
+        <p><strong>Year of Release:</strong> <span id="tv-year">--</span></p>
+        <p><strong>Content Rating:</strong> <span id="tv-certificate">--</span></p>
+        <p><strong>No. of Seasons:</strong> <span id="tv-seasons">--</span></p>
+        <p><strong>Genre:</strong> <span id="tv-genre">--</span></p>
+        <p><strong>IMDB Rating:</strong> <span id="tv-rating">--</span></p>
+        <p><strong>Streaming Platform:</strong> <span id="tv-platform">--</span></p>
+        <p><strong>Description:</strong> <span id="tv-description">--</span></p>
+      </div>
+
+      <div class="tile">
+        <h3>Your Emotion, Your Song</h3>
+        <p><strong>Track Name:</strong> <span id="song-name">--</span></p>
+        <p><strong>Artist's Name:</strong> <span id="song-artist">--</span></p>
+        <p><strong>Valence:</strong> <span id="song-valence">--</span></p>
+        <p><strong>Energy:</strong> <span id="song-energy">--</span></p>
+        <p><strong>Danceability:</strong> <span id="song-danceability">--</span></p>
+        <p><strong>Tempo:</strong> <span id="song-tempo">--</span></p>
+        <p><strong>Acousticness:</strong> <span id="song-acousticness">--</span></p>
+        <p><strong>Speechiness:</strong> <span id="song-speechiness">--</span></p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="fade-in fade-in-delay-3">
+    <p>&copy; 2025 EmotiScope | GEHU DEHRADUN</p>
+    <p>
+      <a href="/static/about.html">About Us</a> |
+      <a href="/static/contact.html">Contact</a>
+    </p>
+  </footer>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>

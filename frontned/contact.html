@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us - EmotiScope</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .logo-svg {
+      width: 180px;
+      height: auto;
+      cursor: pointer;
+    }
+    .eye {
+      transition: all 0.3s ease;
+    }
+    .logo-link:hover .eye-right {
+      r: 1;
+    }
+    .magnifier-group {
+      transition: transform 0.4s ease, filter 0.4s ease;
+      transform-origin: center;
+    }
+    .logo-link:hover .magnifier-group {
+      transform: scale(1.05) rotate(-5deg);
+      filter: drop-shadow(0 0 6px #fb7185);
+    }
+    header {
+      padding: 5px 20px;
+      background-color: #0f172a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header .logo-container {
+      display: flex;
+      align-items: center;
+    }
+    footer {
+      padding: 2px 20px;
+      background-color: #0f172a;
+      text-align: center;
+      font-size: 15px;
+    }
+    footer a {
+      color: #fb7185;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Emoji Background -->
+  <div class="emoji-bg"></div>
+
+  <!-- Preloader -->
+  <div id="preloader">Loading EmotiScope...</div>
+
+  <!-- Header -->
+  <header class="fade-in fade-in-delay-1">
+    <div class="logo-container">
+      <a href="index.html" class="logo-link">
+        <svg class="logo-svg" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+          <style>
+            .text { font-family: 'Segoe UI', sans-serif; font-size: 48px; font-weight: bold; }
+            .emotion { fill: #fb7185; }
+            .scope { fill: #ffffff; }
+          </style>
+          <g class="magnifier-group">
+            <circle cx="80" cy="100" r="40" stroke="#fb7185" stroke-width="6" fill="none"/>
+            <circle cx="80" cy="100" r="30" fill="#fb7185"/>
+            <circle cx="80" cy="100" r="28" fill="#fb7185"/>
+            <circle class="eye eye-left" cx="70" cy="90" r="4" fill="#fff"/>
+            <circle class="eye eye-right" cx="90" cy="90" r="4" fill="#fff"/>
+            <path d="M70,110 Q80,120 90,110" stroke="#fff" stroke-width="3" fill="none" />
+            <rect x="110" y="130" width="60" height="10" rx="5" fill="#0f172a" transform="rotate(45 110 130)" />
+          </g>
+          <text x="180" y="115" class="text"><tspan class="scope">Emoti</tspan><tspan class="emotion">Scope</tspan></text>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="container fade-in fade-in-delay-2">
+    <h2>Contact Us</h2>
+    <p>If you have any questions or feedback, feel free to reach out to us!</p>
+    <p>Email: <a href="mailto:avlokdobriyal0@gmail.com">avlokdobriyal0@gmail.com</a></p>
+    <p>Phone: +91 8272891513</p>
+  </main>
+
+  <!-- Footer -->
+  <footer class="fade-in fade-in-delay-3">
+    <p>&copy; 2025 EmotiScope | GEHU DEHRADUN</p>
+    <p>
+      <a href="about.html">About Us</a> |
+      <a href="contact.html">Contact</a>
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
